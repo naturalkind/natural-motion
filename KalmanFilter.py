@@ -136,7 +136,7 @@ def lift_image(returned_val):
          
 returned_val = "data_c.txt"
 coordinates = lift_image(returned_val)
-_file = open("data_c_kalman_1.txt","w")
+_file = open("data_c_kalman.txt","w")
 for i in coordinates:
     coordinates = []
     for iz, z in enumerate(i):
