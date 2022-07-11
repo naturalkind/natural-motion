@@ -1,0 +1,11 @@
+.idea/
+*.pyc
+*~
+*.so
+*.cpp
+
+build/
+__pycache__/
+
+# folders
+saved_sessions/
