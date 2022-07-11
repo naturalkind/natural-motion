@@ -1,4 +1,5 @@
 # blender-natural-motion
+![тестовый логотип](https://github.com/naturalkind/blender-natural-motion/blob/main/logo.png)
 ### Тестовый запуск
 1 получение координат суставов человека из видео Lifting-from-the-Deep-release-master/applications/   
 ```
@@ -10,8 +11,8 @@ python3 KalmanFilter.py
 ```
 3 создание анимации в Blender
 запустить файл natural_motion.py в blender
-<img src="https://github.com/naturalkind/blender-natural-motion/blob/main/temp_gif_2.gif" alt="пример работы" width="100"/>
-![тестовый логотип](https://github.com/naturalkind/blender-natural-motion/blob/main/logo.png)
+<img src="https://github.com/naturalkind/blender-natural-motion/blob/main/temp_gif_2.gif" alt="пример работы" width="300"/>
+
 Захват движения, популярная и востребованная технология в индустрии развлечений.    
 Текущие решения ставят непреодалимый барьер перед теми кому технология нужна. Причины:    
 1 дорогое специализированное оборудование      
