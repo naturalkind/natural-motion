@@ -10,7 +10,7 @@ python3 KalmanFilter.py
 ```
 3 создание анимации в Blender
 запустить файл natural_motion.py в blender
-<img src="[https://github.com/your_image.png](https://github.com/naturalkind/blender-natural-motion/blob/main/temp_gif_2.gif)" alt="пример работы" width="100"/>
+<img src="https://github.com/naturalkind/blender-natural-motion/blob/main/temp_gif_2.gif" alt="пример работы" width="100"/>
 ![тестовый логотип](https://github.com/naturalkind/blender-natural-motion/blob/main/logo.png)
 Захват движения, популярная и востребованная технология в индустрии развлечений.    
 Текущие решения ставят непреодалимый барьер перед теми кому технология нужна. Причины:    
