@@ -1,4 +1,4 @@
-# blender-natural-motion
+# blender-motion
 ![тестовый логотип](https://github.com/naturalkind/blender-natural-motion/blob/main/logo.png)
 ### Тестовый запуск
 1 получение координат суставов человека из видео Lifting-from-the-Deep-release-master/applications/   
