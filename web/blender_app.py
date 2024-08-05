@@ -226,7 +226,7 @@ def change_arm(coordinates, scale=1.0):
 
 
 #------------------------->
-_file = json.loads(open("/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/blender-motion/web/static_file/dict_bonse_w.txt", "r").read())
+_file = json.loads(open("./static_file/dict_bonse_w.txt", "r").read())
 key_w = list(_file.keys())
 FULL_L = {}  
 for u in LIFTING_BONE_NAMES:
@@ -238,13 +238,8 @@ for u in LIFTING_BONE_NAMES:
         FULL_L[u] = _file[u]
 
 #------------------------------------------------>  
-  
-
-  
     
-#returned_val = "/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/blender-motion/web/static_file/data_c_kalman.txt"
-returned_val = f"/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/blender-motion/web/data/{argv}_data_kalman.txt"
-#returned_val = "data_c.txt"
+returned_val = f"./data/{argv}_data_kalman.txt"
 coordinates = lift_image(returned_val)
 
 scene.frame_start = 0
@@ -298,7 +293,7 @@ ov=bpy.context.copy()
 ov['area']=[a for a in bpy.context.screen.areas if a.type=="VIEW_3D"][0]
 bpy.ops.transform.rotate(ov, value=math.radians(90), orient_axis='X')
 
-bpy.ops.export_anim.bvh(filepath=f"/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/blender-motion/web/file/{argv}.bvh", 
+bpy.ops.export_anim.bvh(filepath=f"./file/{argv}.bvh", 
                         check_existing=True, 
                         filter_glob="*.bvh", 
                         global_scale=10, 

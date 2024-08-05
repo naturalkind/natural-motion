@@ -1,0 +1,11 @@
+*.pyc
+env
+venv
+videos
+data
+file
+Lifting-from-the-Deep-release-master/data/saved_sessions
+PoseFormerV2
+test.py
+requirements.txt
+Lifting-from-the-Deep-release-master/requirements.txt

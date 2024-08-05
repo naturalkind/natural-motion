@@ -25,8 +25,8 @@ SESSION_PATH = SAVED_SESSIONS_DIR + '/init_session/init'
 PROB_MODEL_PATH = SAVED_SESSIONS_DIR + '/prob_model/prob_model_params.mat'
 
 
-def main():
-     cap = cv2.VideoCapture("/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/blender-motion/web/videos/0001-0643.mp4")
+def main(file_path):
+     cap = cv2.VideoCapture(file_path)
      h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
      w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 
@@ -70,5 +70,5 @@ def display_results(in_image, data_2d, joint_visibility, data_3d):
 
 if __name__ == '__main__':
     import sys
-    sys.exit(main())
+    sys.exit(main(""))
     

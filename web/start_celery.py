@@ -27,8 +27,8 @@ app = Celery('tasks', backend=CELERY_RESULT_BACKEND, broker=CELERY_BROKER_URL)
 app.conf.task_serializer   = 'json'
 app.conf.result_serializer = 'json'
 
-SESSION_PATH = '/nn/Lifting-from-the-Deep-release-master/data/saved_sessions/init_session/init'
-PROB_MODEL_PATH = '/nn/Lifting-from-the-Deep-release-master/data/saved_sessions/prob_model/prob_model_params.mat'
+SESSION_PATH = './nn/Lifting-from-the-Deep-release-master/data/saved_sessions/init_session/init'
+PROB_MODEL_PATH = './nn/Lifting-from-the-Deep-release-master/data/saved_sessions/prob_model/prob_model_params.mat'
 
 global_bone_dict = {'base': 0, 'pelvis_r': 0, 'thigh_r': 0, 'calf_r': 0, 'pelvis_l': 0, 
                     'thigh_l': 0, 'calf_l': 0, 'waist': 0, 'chest': 0, 
@@ -36,6 +36,12 @@ global_bone_dict = {'base': 0, 'pelvis_r': 0, 'thigh_r': 0, 'calf_r': 0, 'pelvis
                     'forearm_l': 0, 'shoulder_r': 0, 'arm_r': 0, 'forearm_r': 0}
 
 list_bone_key_dict = list(global_bone_dict.keys())  
+
+def create_folder(folder_path):
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Папка '{folder_path}' создана.")
+[create_folder(z) for z in ["data", "videos", "file"]]
 
 @app.task(name='func_celery')
 def func_celery(video_file):
@@ -58,7 +64,6 @@ def func_celery(video_file):
         try:    
             pose_2d, visibility, pose_3d = pose_estimator.estimate(image)
             for ii in pose_3d:
-                print (ii)
                 coordinates = []
                 for i in range(len(ii[0])):
                     # фильтр калмана
@@ -73,6 +78,6 @@ def func_celery(video_file):
     cv2.destroyAllWindows()
     
     # запуск blender
-    blender_start = subprocess.call(f'blender --background --python /media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/blender-motion/web/blender_app.py -- asss {video_file.split("/")[-1].split(".")[0]}', shell=True)
+    blender_start = subprocess.call(f'blender --background --python blender_app.py -- asss {video_file.split("/")[-1].split(".")[0]}', shell=True)
     print (blender_start)       
 

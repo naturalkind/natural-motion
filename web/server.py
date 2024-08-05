@@ -9,8 +9,6 @@ from collections import defaultdict
 
 from PIL import Image
 from tqdm import tqdm
-from moviepy.editor import * 
-
 
 from tornado.escape import json_encode
 from tornado import websocket, web, ioloop
@@ -19,25 +17,7 @@ import tornado.web
 import tornado.websocket
 import subprocess
 
-#_celery_start_ = subprocess.call(f'celery -A start_celery worker --loglevel=info', shell=True)
-#print (_celery_start_)  
-
-from nn.KalmanFilter import *
-
-from lifting import PoseEstimator
-from lifting.utils import draw_limbs
-from lifting.utils import plot_pose
 from start_celery import func_celery 
-
- 
-#Получить координаты скилета
-def lift_image(value):
-    with open(value) as f:
-         f = f.readlines()
-         ls = []         
-         for i in f:
-            ls.append(json.loads(i))
-         return ls
          
 class ImageWebSocket(tornado.websocket.WebSocketHandler):
     clients = set()
@@ -51,7 +31,7 @@ class ImageWebSocket(tornado.websocket.WebSocketHandler):
         print("WebSocket opened from: " + self.request.remote_ip)
     def on_message(self, message):
         ms =  json.loads(message)
-        print ("message >>>", ms["process"])
+        #print ("message >>>", ms["process"])
         if ms["process"] == "Start":
             self.namefile = f'videos/{ms["Name"]}'
             self.myfile = open(self.namefile, "wb")
@@ -68,12 +48,10 @@ class ImageWebSocket(tornado.websocket.WebSocketHandler):
             self.Blist.append(Adata)
             self.write_message(json.dumps({"process":"progress"}))
         if ms["process"] == "progress":  
-            print (self.Blist)
             for ix, i in enumerate(self.Blist):
                 if i.status == "SUCCESS":
                     del self.Blist[ix]
 #                if i.status == "PENDING":            
-                print (i.status)
             if len(self.Blist) == 0:
                 self.write_message(json.dumps({"process":"Done", "file": f'{self.namefile.split("/")[-1].split(".")[0]}.bvh'}))
             else:
@@ -83,6 +61,22 @@ class ImageWebSocket(tornado.websocket.WebSocketHandler):
         ImageWebSocket.clients.remove(self)
         print("WebSocket closed from: " + self.request.remote_ip)
 
+class MultiPathStaticFileHandler(tornado.web.StaticFileHandler):
+    def initialize(self, paths):
+        self.paths = paths
+        super().initialize(path=paths[0])
+
+    def get_absolute_path(self, root, path):
+        for root_path in self.paths:
+            absolute_path = os.path.abspath(os.path.join(root_path, path))
+            if os.path.exists(absolute_path):
+                return absolute_path
+        return None
+
+    def validate_absolute_path(self, root, absolute_path):
+        if absolute_path is None:
+            raise tornado.web.HTTPError(404)
+        return super().validate_absolute_path(absolute_path, absolute_path)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -98,7 +92,7 @@ if __name__ == '__main__':
             (r"/build/(three.module.js)", tornado.web.StaticFileHandler, {'path':"./node_modules/three/build/"}),
             (r"/(main.css)", tornado.web.StaticFileHandler, {'path':"./css/"}),
             (r"/files/(RobotoMono-Regular.woff2)", tornado.web.StaticFileHandler, {'path':"./css/"}),
-            (r"/models/bvh/(.*)", tornado.web.StaticFileHandler, {'path':'./file'}),
+            (r"/models/bvh/(.*)", MultiPathStaticFileHandler, {'paths': ['./static_file', './file']}),
         ])
 
     app.listen(8800)

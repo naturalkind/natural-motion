@@ -118,29 +118,3 @@ class KalmanProcess():
         return X_cal, Y_cal, Z_cal
       
 kalman_process = KalmanProcess()
-
-#_dict = {'base': 0, 'pelvis_r': 0, 'thigh_r': 0, 'calf_r': 0, 'pelvis_l': 0, 
-#         'thigh_l': 0, 'calf_l': 0, 'waist': 0, 'chest': 0, 
-#         'neck': 0, 'head': 0, 'shoulder_l': 0, 'arm_l': 0, 
-#         'forearm_l': 0, 'shoulder_r': 0, 'arm_r': 0, 'forearm_r': 0}
-
-#list_dict = list(_dict.keys())   
-##Получить координаты скилета
-#def lift_image(returned_val):
-#    with open(returned_val) as f:
-#         f = f.readlines()
-#         ls = []         
-#         for i in f:
-#            ls.append(json.loads(i))
-#         return ls
-#         
-#returned_val = "data_c.txt"
-#coordinates = lift_image(returned_val)
-#_file = open("data_c_kalman_1.txt","w")
-#for i in coordinates:
-#    coordinates = []
-#    for iz, z in enumerate(i):
-#        out_kalman_x, out_kalman_y, out_kalman_z = kalman_process.do_kalman_filter(z[0], z[1], z[2], list_dict[iz])
-#        coordinates.append([out_kalman_x, out_kalman_y, out_kalman_z])
-#    _file.write(str(coordinates)+"\n")  
-#_file.close()      

@@ -25,8 +25,8 @@ SESSION_PATH = SAVED_SESSIONS_DIR + '/init_session/init'
 PROB_MODEL_PATH = SAVED_SESSIONS_DIR + '/prob_model/prob_model_params.mat'
 
 
-def main():
-     cap = cv2.VideoCapture("0001-0643.mp4")
+def main(file_path):
+     cap = cv2.VideoCapture(file_path)
      h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
      w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 
@@ -34,6 +34,7 @@ def main():
      pose_estimator = PoseEstimator((h,w,3), SESSION_PATH, PROB_MODEL_PATH)
      pose_estimator.initialise()
      outfile = open('data_c.txt', 'w')
+     idx = 0
      while(True):
             ret, image = cap.read()
             pose_2d, visibility, pose_3d = pose_estimator.estimate(image)
@@ -45,7 +46,10 @@ def main():
             draw_limbs(image, pose_2d, visibility)       
             cv2.imshow('frame', image)
             if cv2.waitKey(1) & 0xFF == ord('q'):
-                   break                           
+                break    
+            if idx > 40:
+                break  
+            idx += 1                     
      outfile.close()
      # When everything done, release the capture
      cap.release()
@@ -68,5 +72,5 @@ def display_results(in_image, data_2d, joint_visibility, data_3d):
 
 if __name__ == '__main__':
     import sys
-    sys.exit(main())
+    sys.exit(main(""))
     
