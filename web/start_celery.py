@@ -27,8 +27,8 @@ app = Celery('tasks', backend=CELERY_RESULT_BACKEND, broker=CELERY_BROKER_URL)
 app.conf.task_serializer   = 'json'
 app.conf.result_serializer = 'json'
 
-SESSION_PATH = './nn/Lifting-from-the-Deep-release-master/data/saved_sessions/init_session/init'
-PROB_MODEL_PATH = './nn/Lifting-from-the-Deep-release-master/data/saved_sessions/prob_model/prob_model_params.mat'
+SESSION_PATH = './data/saved_sessions/init_session/init'
+PROB_MODEL_PATH = './data/saved_sessions/prob_model/prob_model_params.mat'
 
 global_bone_dict = {'base': 0, 'pelvis_r': 0, 'thigh_r': 0, 'calf_r': 0, 'pelvis_l': 0, 
                     'thigh_l': 0, 'calf_l': 0, 'waist': 0, 'chest': 0, 
